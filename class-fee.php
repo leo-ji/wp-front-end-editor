@@ -71,6 +71,7 @@ class FEE {
 
 		add_post_type_support( 'post', 'front-end-editor' );
 		add_post_type_support( 'page', 'front-end-editor' );
+        add_post_type_support( 'person', 'front-end-editor');
 
 		// Lets auto-drafts pass as drafts by WP_Query.
 		$wp_post_statuses['auto-draft']->protected = true;
@@ -206,7 +207,7 @@ class FEE {
 		), self::VERSION, true );
 		wp_localize_script( 'fee', 'feeData', array(
 			'tinymce' => apply_filters( 'fee_tinymce_config', $tinymce ),
-			'post' => $this->api_request( 'GET', '/' . ( $post->post_type === 'page' ? 'pages' : 'posts' ) . '/' . $post->ID, array( 'context' => 'edit' ) ),
+			'post' => $this->api_request( 'GET', '/' . if( $post->post_type === 'page' ){ 'pages' } elseif ($post->post_type === 'person') { 'persons' } else { 'posts' } . '/' . $post->ID, array( 'context' => 'edit' ) ),
 			'titlePlaceholder' => apply_filters( 'enter_title_here', __( 'Enter title here' ), $post ),
 			'editURL' => get_edit_post_link()
 		) );
