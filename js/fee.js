@@ -9,7 +9,7 @@ window.fee = (function (
 ) {
   var hidden = true
 
-  var BaseModel = api.models[ data.post.type === 'page' ? 'Page' : 'Post' ]
+  var BaseModel = api.models[ data.post.type === 'page' ? 'Page' : [ data.post.type === 'person' ? 'Person' : 'Post' ]]
 
   var AutosaveModel = BaseModel.extend({
     isNew: function () {
